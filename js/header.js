@@ -77,16 +77,20 @@ const _render = () => {
     </div>
   `;
 
-  const headerCopyButton = headerEl.querySelector('#header-copy-button');
-  headerCopyButton.addEventListener('click', () => {
-    _copyToClipboard(username);
+  if (logout) {
+    const headerCopyButton = headerEl.querySelector('#header-copy-button');
+    headerCopyButton.addEventListener('click', e => {
+      _copyToClipboard(username);
 
-    headerCopyButton.classList.add('copied');
+      headerCopyButton.classList.add('copied');
 
-    setTimeout(() => {
-      headerCopyButton.classList.remove('copied');
-    }, 2000);
-  });
+      setTimeout(() => {
+        headerCopyButton.classList.remove('copied');
+      }, 2000);
+
+      e.preventDefault();
+    });
+  }
 
   const headerLogoutButton = headerEl.querySelector('#header-logout-button');
   if (headerLogoutButton) {
