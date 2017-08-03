@@ -1,7 +1,7 @@
 const home = document.currentScript.getAttribute('home');
 const tabsAttribute = document.currentScript.getAttribute('tabs');
 const urlsAttribute = document.currentScript.getAttribute('urls');
-const logoutAttribute = document.currentScript.getAttribute('logout');
+const logout = document.currentScript.hasAttribute('logout');
 let urls = urlsAttribute.length > 0 ? urlsAttribute.split(',') : [];
 let tabs = tabsAttribute.length > 0 ? tabsAttribute.split(',').map((t, i) => ({
   tab: t,
@@ -60,15 +60,19 @@ const _render = () => {
     </navbar>
     <div class=header-right>
       ${username ? `<navbar>
-        <a class="blue copyable" id=header-copy-button>
+        <a href="/id" class="blue ${logout ? 'copyable' : ''}" id=header-copy-button>
           <span class=avatar>
             <img src="${creaturejs.makeStaticCreature('user:' + username)}" class=avatar-image id=avatar-image />
             <span id=avatar-username>${username}</span>
           </span>
-          <span class=copy>Click to copy</span>
-          <span class=notification>...Copied!</span>
+          ${logout ?
+            `<span class=copy>Click to copy</span>
+            <span class=notification>...Copied!</span>`
+          :
+            ''
+          }
         </a>
-        <a href="/id/login" class=button id=header-logout-button>Logout</a>
+        ${logout ? `<a href="/id/login" class=button id=header-logout-button>Logout</a>` : ''}
       </navbar>` : ''}
     </div>
   `;
