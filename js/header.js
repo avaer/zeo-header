@@ -77,7 +77,7 @@ const _render = () => {
     </div>
   `;
 
-  if (logout) {
+  if (logout && username) {
     const headerCopyButton = headerEl.querySelector('#header-copy-button');
     headerCopyButton.addEventListener('click', e => {
       _copyToClipboard(username);
