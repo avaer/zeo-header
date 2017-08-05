@@ -1,3 +1,5 @@
+(() => {
+
 const home = document.currentScript.getAttribute('home');
 const tabsAttribute = document.currentScript.getAttribute('tabs');
 const urlsAttribute = document.currentScript.getAttribute('urls');
@@ -149,3 +151,5 @@ const header = {
   onlogout: _nop,
 };
 window.header = header;
+
+})();
