@@ -2,6 +2,12 @@ body {
   --fonts: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --monospace-fonts: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
+a {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+}
 .header {
   display: flex;
   height: 80px;
@@ -201,4 +207,13 @@ navbar > a.button:hover {
 .notification .close {
   position: absolute;
   right: 20px;
+}
+.notification a {
+  color: #2196F3;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+}
+.notification a:hover {
+  text-decoration: underline;
 }
