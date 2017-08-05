@@ -130,7 +130,15 @@ const header = {
     tab = newTab;
     _render();
   },
-  setNotification(type, message) {
+  setNotification(typeEnum, message) {
+    const type = (() => {
+      switch (typeEnum) {
+        case true: return 'ok';
+        case false: return 'error';
+        default: return null;
+      }
+    })();
+
     notification = {
       type,
       message,
