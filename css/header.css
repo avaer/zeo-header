@@ -169,3 +169,36 @@ navbar > a.button {
 navbar > a.button:hover {
   background-color: #303F9F;
 }
+.notification {
+  display: flex;
+  padding: 20px;
+  color: #FFF;
+  font-size: 15px;
+  justify-content: center;
+  align-items: center;
+}
+.notification.ok {
+  background-color: #4CAF50;
+}
+.notification.error {
+  background-color: #F44336;
+}
+.notification.null {
+  background-color: #333;
+}
+.notification img {
+  filter: invert(1);
+}
+.notification .img {
+  display: none;
+  margin-right: 10px;
+}
+.notification.ok .img.ok,
+.notification.error .img.error,
+.notification.null .img.null {
+  display: block;
+}
+.notification .close {
+  position: absolute;
+  right: 20px;
+}

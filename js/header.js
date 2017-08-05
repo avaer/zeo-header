@@ -9,7 +9,8 @@ let tabs = tabsAttribute.length > 0 ? tabsAttribute.split(',').map((t, i) => ({
 })) : [];
 let tab = document.currentScript.getAttribute('tab');
 let username = document.currentScript.getAttribute('username');
-let headerEl = document.currentScript;
+let notification = null;
+let el = document.currentScript;
 
 const _capitalize = s => s[0].toUpperCase() + s.slice(1);
 const _nop = () => {};
@@ -44,41 +45,51 @@ const _copyToClipboard = s => {
   return successful;
 };
 const _render = () => {
-  const oldHeaderEl = headerEl;
+  const oldEl = el;
 
-  headerEl = document.createElement('header');
-  headerEl.classList.add('header');
-  headerEl.innerHTML = `\
-    <div class=header-left>
-      <div class=logo-wrap>
-        <img src="/img/logo.svg" class=logo>
+  const newEl = document.createElement('div');
+  newEl.innerHTML = `\
+    <header class=header>
+      <div class=header-left>
+        <div class=logo-wrap>
+          <img src="/img/logo.svg" class=logo>
+        </div>
+        <a href="${home}" class=header-logo-anchor>zeo</a>
       </div>
-      <a href="${home}" class=header-logo-anchor>zeo</a>
-    </div>
-    <navbar>
-      ${tabs.map(t => `<a href="${t.url}" class="blue ${t.tab === tab ? 'selected' : ''}">${_capitalize(t.tab)}</a>`).join('\n')}
-    </navbar>
-    <div class=header-right>
-      ${username ? `<navbar>
-        <a href="/id" class="blue ${logout ? 'copyable' : ''}" id=header-copy-button>
-          <span class=avatar>
-            <img src="${creaturejs.makeStaticCreature('user:' + username)}" class=avatar-image id=avatar-image />
-            <span id=avatar-username>${username}</span>
-          </span>
-          ${logout ?
-            `<span class=copy>Click to copy</span>
-            <span class=notification>...Copied!</span>`
-          :
-            ''
-          }
-        </a>
-        ${logout ? `<a href="/id/login" class=button id=header-logout-button>Logout</a>` : ''}
-      </navbar>` : ''}
-    </div>
+      <navbar>
+        ${tabs.map(t => `<a href="${t.url}" class="blue ${t.tab === tab ? 'selected' : ''}">${_capitalize(t.tab)}</a>`).join('\n')}
+      </navbar>
+      <div class=header-right>
+        ${username ? `<navbar>
+          <a href="/id" class="blue ${logout ? 'copyable' : ''}" id=header-copy-button>
+            <span class=avatar>
+              <img src="${creaturejs.makeStaticCreature('user:' + username)}" class=avatar-image id=avatar-image />
+              <span id=avatar-username>${username}</span>
+            </span>
+            ${logout ?
+              `<span class=copy>Click to copy</span>
+              <span class=notification>...Copied!</span>`
+            :
+              ''
+            }
+          </a>
+          ${logout ? `<a href="/id/login" class=button id=header-logout-button>Logout</a>` : ''}
+        </navbar>` : ''}
+      </div>
+    </header>
+    ${notification ? `<div class="notification ${notification.type}" id=notification>
+      <img src="/id/img/ok.svg" class="img ok">
+      <img src="/id/img/error.svg" class="img error">
+      <img src="/id/img/emoticon.svg" class="img null">
+      <div class=notification-text id=notification-text>${notification.message}</div>
+      <a class=close id=notification-close>
+        <img src="/id/img/close.svg">
+      </a>
+    </div>` : ''}
   `;
 
   if (logout && username) {
-    const headerCopyButton = headerEl.querySelector('#header-copy-button');
+    const headerCopyButton = newEl.querySelector('#header-copy-button');
     headerCopyButton.addEventListener('click', e => {
       _copyToClipboard(username);
 
@@ -92,20 +103,39 @@ const _render = () => {
     });
   }
 
-  const headerLogoutButton = headerEl.querySelector('#header-logout-button');
+  const headerLogoutButton = newEl.querySelector('#header-logout-button');
   if (headerLogoutButton) {
     headerLogoutButton.addEventListener('click', e => {
       header.onlogout(e);
     });
   }
 
-  oldHeaderEl.parentNode.replaceChild(headerEl, oldHeaderEl);
+  const notificationEl = newEl.querySelector('#notification');
+  if (notificationEl) {
+    const notificationTextEl = newEl.querySelector('#notification-text');
+    const notificationCloseEl = newEl.querySelector('#notification-close');
+    notificationCloseEl.addEventListener('click', () => {
+      notification = null;
+      _render();
+    });
+  }
+
+  oldEl.parentNode.replaceChild(newEl, oldEl);
+  el = newEl;
 };
 _render();
 
 const header = {
   setTab(newTab) {
     tab = newTab;
+    _render();
+  },
+  setNotification(type, message) {
+    notification = {
+      type,
+      message,
+    };
+
     _render();
   },
   onlogout: _nop,
