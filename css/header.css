@@ -33,6 +33,7 @@ body {
   border-radius: 100px;
   justify-content: center;
   align-items: center;
+  pointer-events: none;
 }
 .header .logo-wrap .logo {
   width: 10px;
