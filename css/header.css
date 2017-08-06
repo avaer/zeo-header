@@ -29,21 +29,12 @@ a {
   margin-left: auto;
   justify-content: flex-end;
 }
-.header .logo-wrap {
-  position: absolute;
+.header .logo {
   display: flex;
-  width: 24px;
-  height: 24px;
-  top: 8px;
-  background-color: #EEE;
-  border-radius: 100px;
-  justify-content: center;
-  align-items: center;
+  width: 16px;
+  height: calc(80px / 50 * 16);
+  margin-right: 10px;
   pointer-events: none;
-}
-.header .logo-wrap .logo {
-  width: 10px;
-  height: calc(80px / 50 * 10);
 }
 .header a {
   color: inherit;
@@ -91,7 +82,6 @@ a {
   height: inherit;
   margin: 0 -30px;
   padding: 0 30px;
-  background-color: #FFF;
   font-size: 20px;
   align-items: center;
 }

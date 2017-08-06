@@ -53,10 +53,10 @@ const _render = () => {
   newEl.innerHTML = `\
     <header class=header>
       <div class=header-left>
-        <div class=logo-wrap>
-          <img src="/img/logo.svg" class=logo>
-        </div>
-        <a href="${home}" class=header-logo-anchor>zeo</a>
+        <img src="/img/logo.svg" class=logo>
+        <a href="${home}" class=header-logo-anchor>
+          <strong>ZEO</strong><span>VR</span>
+        </a>
       </div>
       <navbar>
         ${tabs.map(t => `<a href="${t.url}" class="blue ${t.tab === tab ? 'selected' : ''}">${_capitalize(t.tab)}</a>`).join('\n')}
